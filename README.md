@@ -1,3 +1,3 @@
-# pacifica-dependencies
+# Pacifica Dependencies
 
-TODO: Enter the cookbook description here.
+Pacifica cookbook dependencies is used for unit testing the pacifica cookbook.
