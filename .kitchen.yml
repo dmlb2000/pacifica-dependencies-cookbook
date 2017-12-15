@@ -8,19 +8,38 @@ provisioner:
   # For example:
   #   always_update_cookbooks: <%= !ENV['CI'] %>
   always_update_cookbooks: true
+  require_chef_omnibus: 12
 
 verifier:
   name: inspec
 
 platforms:
   - name: ubuntu-16.04
-  - name: centos-7
+    run_list:
+      - recipe[apt]
+    attributes:
+      apt:
+        compile_time_update: true
+  - name: centos-7.4
+  - name: centos-6.9
 
 suites:
-  - name: default
+  - name: mysql_service
     run_list:
-      - recipe[pacifica-dependencies::default]
+      - recipe[pacifica-dependencies::mysql_service]
     verifier:
       inspec_tests:
-        - test/smoke/default
-    attributes:
+        - test/smoke/mysql_service
+  - name: cartdb_setup
+    run_list:
+      - recipe[pacifica-dependencies::mysql_service]
+      - recipe[pacifica-dependencies::cartdb_setup]
+    verifier:
+      inspec_tests:
+        - test/smoke/cartdb_setup
+  - name: rabbitmq
+    run_list:
+      - recipe[pacifica-dependencies::rabbitmq]
+    verifier:
+      inspec_tests:
+        - test/smoke/rabbitmq

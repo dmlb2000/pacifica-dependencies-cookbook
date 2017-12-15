@@ -22,3 +22,8 @@ source_url 'https://github.com/pacifica/pacifica-dependencies'
 supports 'ubuntu', '>= 16.04'
 supports 'centos', '>= 6.0'
 supports 'redhat', '>= 6.0'
+
+depends 'apt'
+depends 'build-essential'
+depends 'chef-sugar'
+depends 'rabbitmq'
