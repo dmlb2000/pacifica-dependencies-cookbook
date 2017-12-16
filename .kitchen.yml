@@ -36,6 +36,13 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/pgsql_service
+  - name: ingestdb_setup
+    run_list:
+      - recipe[pacifica-dependencies::mysql_service]
+      - recipe[pacifica-dependencies::ingestdb_setup]
+    verifier:
+      inspec_tests:
+        - test/smoke/ingestdb_setup
   - name: cartdb_setup
     run_list:
       - recipe[pacifica-dependencies::mysql_service]
