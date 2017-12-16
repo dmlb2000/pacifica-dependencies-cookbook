@@ -15,7 +15,7 @@ package 'PostgreSQL Packages' do
   package_name packages
 end
 
-setup_command = if rhel? && (node[:platform_version].to_i == 6)
+setup_command = if rhel? && (node['platform_version'].to_i == 6)
                   'service postgresql initdb'
                 else
                   'postgresql-setup initdb'
