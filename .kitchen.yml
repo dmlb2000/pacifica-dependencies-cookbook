@@ -30,6 +30,12 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/mysql_service
+  - name: pgsql_service
+    run_list:
+      - recipe[pacifica-dependencies::pgsql_service]
+    verifier:
+      inspec_tests:
+        - test/smoke/pgsql_service
   - name: cartdb_setup
     run_list:
       - recipe[pacifica-dependencies::mysql_service]
@@ -37,9 +43,22 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/cartdb_setup
+  - name: metadatadb_setup
+    run_list:
+      - recipe[pacifica-dependencies::pgsql_service]
+      - recipe[pacifica-dependencies::metadatadb_setup]
+    verifier:
+      inspec_tests:
+        - test/smoke/metadatadb_setup
   - name: rabbitmq
     run_list:
       - recipe[pacifica-dependencies::rabbitmq]
     verifier:
       inspec_tests:
         - test/smoke/rabbitmq
+  - name: elasticsearch
+    run_list:
+      - recipe[pacifica-dependencies::elasticsearch]
+    verifier:
+      inspec_tests:
+        - test/smoke/elasticsearch
