@@ -50,6 +50,13 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/cartdb_setup
+  - name: uniqueiddb_setup
+    run_list:
+      - recipe[pacifica-dependencies::mysql_service]
+      - recipe[pacifica-dependencies::uniqueiddb_setup]
+    verifier:
+      inspec_tests:
+        - test/smoke/uniqueiddb_setup
   - name: metadatadb_setup
     run_list:
       - recipe[pacifica-dependencies::pgsql_service]
