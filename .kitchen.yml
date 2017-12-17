@@ -1,0 +1,71 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  # You may wish to disable always updating cookbooks in CI or other testing environments.
+  # For example:
+  #   always_update_cookbooks: <%= !ENV['CI'] %>
+  always_update_cookbooks: true
+  require_chef_omnibus: 12
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-16.04
+    run_list:
+      - recipe[apt]
+    attributes:
+      apt:
+        compile_time_update: true
+  - name: centos-7.4
+  - name: centos-6.9
+
+suites:
+  - name: mysql_service
+    run_list:
+      - recipe[pacifica-dependencies::mysql_service]
+    verifier:
+      inspec_tests:
+        - test/smoke/mysql_service
+  - name: pgsql_service
+    run_list:
+      - recipe[pacifica-dependencies::pgsql_service]
+    verifier:
+      inspec_tests:
+        - test/smoke/pgsql_service
+  - name: ingestdb_setup
+    run_list:
+      - recipe[pacifica-dependencies::mysql_service]
+      - recipe[pacifica-dependencies::ingestdb_setup]
+    verifier:
+      inspec_tests:
+        - test/smoke/ingestdb_setup
+  - name: cartdb_setup
+    run_list:
+      - recipe[pacifica-dependencies::mysql_service]
+      - recipe[pacifica-dependencies::cartdb_setup]
+    verifier:
+      inspec_tests:
+        - test/smoke/cartdb_setup
+  - name: metadatadb_setup
+    run_list:
+      - recipe[pacifica-dependencies::pgsql_service]
+      - recipe[pacifica-dependencies::metadatadb_setup]
+    verifier:
+      inspec_tests:
+        - test/smoke/metadatadb_setup
+  - name: rabbitmq
+    run_list:
+      - recipe[pacifica-dependencies::rabbitmq]
+    verifier:
+      inspec_tests:
+        - test/smoke/rabbitmq
+  - name: elasticsearch
+    run_list:
+      - recipe[pacifica-dependencies::elasticsearch]
+    verifier:
+      inspec_tests:
+        - test/smoke/elasticsearch
