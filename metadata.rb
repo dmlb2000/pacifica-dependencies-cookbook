@@ -4,7 +4,7 @@ maintainer_email 'dmlb2000@gmail.com'
 license 'Apache-2.0'
 description 'Installs/Configures pacifica-dependencies'
 long_description 'Installs/Configures pacifica-dependencies'
-version '0.1.1'
+version '0.1.2'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 
 # The `issues_url` points to the location where issues for this cookbook are

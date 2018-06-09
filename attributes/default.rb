@@ -27,3 +27,4 @@ default['rabbitmq']['enabled_users'] = [
     ],
   },
 ]
+default['elasticsearch']['install']['type'] = 'tarball'

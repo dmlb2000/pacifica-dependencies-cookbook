@@ -3,6 +3,18 @@
 # Recipe:: metadatadb_setup
 #
 # Copyright:: 2017, The Authors, All Rights Reserved.
+execute 'sleep 3'
+%w(
+  template0
+  template1
+  postgres
+).each do |db_name|
+  execute "Update encoding #{db_name} database to UTF8" do
+    command %(psql -c "UPDATE pg_database SET encoding = pg_char_to_encoding('UTF8') WHERE datname = '#{db_name}';")
+    user 'postgres'
+    not_if %(psql -c 'SELECT encoding FROM pg_database;' | grep -q #{db_name}), user: 'postgres'
+  end
+end
 execute 'Create Pacifica Database' do
   command %(psql -c "create database pacifica_metadata with encoding 'UTF8';")
   user 'postgres'

@@ -11,6 +11,9 @@ describe 'pacifica-dependencies::metadatadb_setup' do
     stub_command("psql -c '\\l' | grep -q pacifica_metadata").and_return(true)
     stub_command("psql -c 'SELECT rolname FROM pg_roles;' | grep -q pacifica").and_return(true)
     stub_command("psql -c '\\l' | grep -q pacifica=").and_return(true)
+    stub_command("psql -c 'SELECT encoding FROM pg_database;' | grep -q template0").and_return(true)
+    stub_command("psql -c 'SELECT encoding FROM pg_database;' | grep -q template1").and_return(true)
+    stub_command("psql -c 'SELECT encoding FROM pg_database;' | grep -q postgres").and_return(true)
   end
   context 'When all attributes are default, on an Ubuntu 16.04' do
     let(:chef_run) do
