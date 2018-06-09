@@ -4,7 +4,7 @@
 #
 # Copyright:: 2017, The Authors, All Rights Reserved.
 include_recipe 'chef-sugar'
-include_recipe 'build-essential'
+build_essential 'default'
 packages = if rhel?
              if node['platform_version'].to_i == 6
                %w(mysql-server mysql mysql-devel)
