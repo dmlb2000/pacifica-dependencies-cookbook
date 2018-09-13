@@ -2,17 +2,20 @@ dist: trusty
 sudo: required
 group: edge
 services: docker
+stages:
+- lint
+- test
 addons:
   apt:
     sources:
-      - chef-stable-trusty
+    - chef-stable-trusty
     packages:
-      - chefdk
+    - chefdk
 
 install: echo "skip bundle install"
 
 before_script:
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+- eval "$(/opt/chefdk/bin/chef shell-init bash)"
 
 env:
   matrix:
@@ -26,18 +29,29 @@ env:
   - T=elasticsearch
 
 script:
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
-  - /opt/chefdk/embedded/bin/cookstyle --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
-  - /opt/chefdk/embedded/bin/rspec --version
-  - /bin/bash -xe travis/pre-commit.sh
-  - /opt/chefdk/embedded/bin/kitchen test $T -d always
+- /opt/chefdk/embedded/bin/chef --version
+- /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
+- /opt/chefdk/embedded/bin/cookstyle --version
+- /opt/chefdk/embedded/bin/foodcritic --version
+- /opt/chefdk/embedded/bin/rspec --version
+- /opt/chefdk/embedded/bin/kitchen test $T -d always
+
+
+jobs:
+  include:
+  - stage: lint
+    python: 3.6
+    language: python
+    services:
+    sudo:
+    script:
+    - pip install pre-commit
+    - pre-commit run -a
 
 notifications:
   email:
     recipients:
-      - dmlb2000@gmail.com
-      - gitbytes@gmail.com
+    - dmlb2000@gmail.com
+    - gitbytes@gmail.com
     on_failure: never
     on_success: always

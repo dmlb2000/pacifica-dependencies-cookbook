@@ -4,8 +4,8 @@ maintainer_email 'dmlb2000@gmail.com'
 license 'Apache-2.0'
 description 'Installs/Configures pacifica-dependencies'
 long_description 'Installs/Configures pacifica-dependencies'
-version '0.1.2'
-chef_version '>= 12.1' if respond_to?(:chef_version)
+version '0.2.0'
+chef_version '>= 14' if respond_to?(:chef_version)
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
@@ -20,11 +20,10 @@ issues_url 'https://github.com/pacifica/pacifica-dependencies/issues'
 source_url 'https://github.com/pacifica/pacifica-dependencies'
 
 supports 'ubuntu', '>= 16.04'
-supports 'centos', '>= 6.0'
-supports 'redhat', '>= 6.0'
+supports 'centos', '>= 7.0'
+supports 'redhat', '>= 7.0'
 
 depends 'apt'
-depends 'build-essential'
 depends 'chef-sugar'
 depends 'rabbitmq'
 depends 'java'
